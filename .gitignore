@@ -1,0 +1,49 @@
+# --------------------
+#  Python
+# --------------------
+__pycache__/
+*.pyc
+
+# --------------------
+# Local data
+# --------------------
+data/
+*.csv
+
+# --------------------
+# dbt
+# --------------------
+target/
+dbt_packages/
+logs/
+manifest.json
+run_results.json
+.user.yml
+profiles.yml
+package-lock.yml
+
+# --------------------
+#  Airflow & Docker
+# --------------------
+airflow/logs/
+airflow/plugins/__pycache__/
+airflow/dags/__pycache__/
+*.db
+*.pid
+*.tar
+*.gz
+.dockerignore
+docker-compose.override.yml
+
+# --------------------
+# IDE & OS
+# --------------------
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# --------------------
+# env
+# --------------------
+.env

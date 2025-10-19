@@ -1,0 +1,65 @@
+sources:
+  - name: raw
+    description: "Source tables of raw NBA data"
+    database: NBA_DB
+    schema: NBA_SCHEMA
+
+    tables: 
+      - name: dim_nba_players
+        description: "NBA players attributes"
+        columns:
+          - name: player_id
+            description: "Unique identifier for each player"
+            tests:
+              - not_null
+              - unique
+
+      - name: dim_nba_teams
+        description: "NBA team attributes"
+        columns:
+          - name: team_id
+            description: "Unique identifier for each team"
+            tests:
+              - not_null
+              - unique
+
+      - name: fact_nba_player_stats
+        description: "Central fact table linking player and team performance"
+        loaded_at_field: loaded_at
+        freshness:
+          warn_after: {count: 3, period: day}
+          error_after: {count: 7, period: day}
+        test:
+          - not_negative:
+              columns: ['points', 'rebounds', 'assists', 'steals', 'blocks', 'turnovers']
+        columns:
+          - name: player_id
+            description: "Foreign key referencing dim_nba_players"
+            tests:
+              - not_null
+              - relationships:
+                  to: source('raw', 'dim_nba_players')
+                  field: player_id
+
+          - name: team_id
+            description: "Foreign key referencing dim_nba_teams"
+            tests:
+              - not_null
+              - relationships:
+                  to: source('raw', 'dim_nba_teams')
+                  field: team_id
+
+      - name: dim_coaches
+        description: "Dimension table containing NBA coaches"
+        columns:
+          - name: coach_id
+            description: "Unique coach identifier"
+            tests:
+              - not_null
+              - unique
+          - name: team_id
+            description: "Team associated with the coach"
+            tests:
+              - relationships:
+                  to: source('raw', 'dim_nba_teams')
+                  field: team_id

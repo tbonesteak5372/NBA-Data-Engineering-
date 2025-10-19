@@ -1,0 +1,30 @@
+services:
+  airflow:
+    build: .
+    image: nba_airflow:latest
+    container_name: nba_airflow
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./plugins:/opt/airflow/plugins
+      - ./dbt:/opt/airflow/dbt
+      - ./data:/opt/airflow/data
+      - ~/.dbt:/home/airflow/.dbt
+      - ./scripts:/opt/airflow/scripts
+
+    env_file:
+      - .env
+    ports:
+      - "8080:8080"
+    command: airflow standalone 
+
+  dbt:
+    image: ghcr.io/dbt-labs/dbt-snowflake:latest
+    container_name: nba_dbt
+    working_dir: /opt/airflow/dbt
+    volumes:
+      - ./dbt:/opt/airflow/dbt
+      - ~/.dbt:/root/.dbt
+    entrypoint: [""] # disables default entrypoint
+    tty: true   # keeps container alive for manual exec
+    command: tail -f /dev/null # keeps it running idle

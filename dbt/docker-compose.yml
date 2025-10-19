@@ -1,0 +1,8 @@
+services:
+  dbt:
+    build: . 
+    container_name: nba_dbt
+    volumes:
+      - .:/usr/app
+      - C:/Users/Anthony A/.dbt:/root/.dbt
+    tty: true
