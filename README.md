@@ -47,9 +47,6 @@ The dbt workflow automates transformations across **bronze → silver → gold**
 
 ---
 
-##  dbt Workflow Diagram
-![System Workflow](assets/arch.png)
-
 ---
 
 ##  Run Sequence
