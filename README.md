@@ -174,10 +174,6 @@ nba_dbt:
 ###  Docker Setup
 
 **Clone the Repository**
-```bash
-git clone https://github.com/<your-username>/nba-data-pipeline.git
-cd nba-data-pipeline
-```
 
 **Build the Docker image**
 ```bash
