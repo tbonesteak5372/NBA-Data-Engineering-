@@ -93,7 +93,7 @@ def get_coach_json(dim_nba_teams):
                         all_rows.extend(rows)
                         if all_headers is None: # only grab headers once
                             all_headers = headers
-                        break
+                        
 
                 break  # exit while True for this team
 
